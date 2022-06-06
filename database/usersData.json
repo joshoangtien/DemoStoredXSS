@@ -2,33 +2,33 @@
     "users": [
         {
             "id": 1,
-            "username": "hao",
+            "username": "admin",
             "password": "123",
-            "introduction": "I am Hao"
+            "introduction": "I am Admin"
         },
         {
             "id": 2,
-            "username": "thoi",
+            "username": "joshoangtien",
             "password": "123",
-            "introduction": "I am Thoi"
+            "introduction": "I am Fairy"
         },
         {
             "id": 3,
-            "username": "dinh",
+            "username": "user",
             "password": "123",
-            "introduction": "I am Dinh"
+            "introduction": "I am User"
         },
         {
             "id": 4,
-            "username": "john",
+            "username": "Member",
             "password": "123",
-            "introduction": "I am John"
+            "introduction": "I am Member"
         },
         {
             "id": 5,
-            "username": "bucky",
+            "username": "hacker",
             "password": "123",
-            "introduction": "I am Bucky"
+            "introduction": "I am Hacker"
         }
     ]
 }
