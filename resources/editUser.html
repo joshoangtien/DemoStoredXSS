@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'"> -->
+
+    <title>Edit user</title>
+</head>
+
+<body>
+    <h1 id="username">{{username}}</h1>
+    <h2>Introduction:</h2>
+    <textarea id="introduction">{{introduction}}</textarea>
+    <button id="done">Done</button>
+
+    <script>
+        var introduction = document.getElementById('introduction');
+
+        var doneButton = document.getElementById("done");
+        doneButton.addEventListener('click', (e) => {
+            var newIntroduction = introduction.value;
+            var updatedUser = {
+                introduction: newIntroduction
+            };
+            console.log(JSON.stringify(updatedUser));
+            var xhr = new XMLHttpRequest();
+            xhr.open('PUT', '/editUser', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify(updatedUser));
+
+            window.location.href = "/messages";
+
+        });
+    </script>
+</body>
+
+</html>

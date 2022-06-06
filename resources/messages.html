@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+</head>
+
+<body>
+    <div style="border: 1px solid black; display:flex; justify-content:center;">
+        <span id="currentUser" style="margin-right: 10px;"></span>
+        <button id="editUser">Edit User</button>
+        <button id="logout">Log out</button>
+
+    </div>
+    <div>
+        <table style="margin-left: auto; margin-right:auto;">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="allMessages">
+                {{messages}}
+            </tbody>
+        </table>
+    </div>
+    <div style="display:flex; justify-content:center;">
+        <input type="text" id="message">
+        <button id="send">Send</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var loggedInUser = "{{loggedInUser}}";
+        var currentUserText = document.getElementById("currentUser");
+        var sendButton = document.getElementById("send");
+        var messageInput = document.getElementById('message');
+        var editUserButton = document.getElementById("editUser");
+        var logoutButton = document.getElementById("logout");
+        var usernames = document.getElementsByClassName("username");
+
+        currentUserText.innerText = loggedInUser.username;
+        sendButton.addEventListener('click', (e) => {
+            checkEmptyAndNotifyNewMessageToServer();
+        });
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.keyCode === 13) {
+                checkEmptyAndNotifyNewMessageToServer();
+            }
+        });
+        editUserButton.addEventListener('click', (e) => {
+            window.location.href = "/editUser";
+        });
+        logoutButton.addEventListener('click', (e) => {
+            window.location.href = "/logout";
+        });
+        //add click to all usernames
+        for (var i = 0; i < usernames.length; i++) {
+            let index = i;  // prevent every messageIndex from being the same (scope)
+            usernames[i].addEventListener('click', (e) => {
+                window.location.href = "/viewUser/?messageindex=" + index.toString();
+            });
+        }
+
+        function checkEmptyAndNotifyNewMessageToServer() {
+            var message = messageInput.value;
+            if (message != "") {
+
+                socket.emit('message', JSON.stringify(
+                    {
+                        userId: loggedInUser.id,
+                        username: loggedInUser.username,
+                        message: message
+                    }));
+
+                messageInput.value = "";
+            }
+        }
+
+        function addNewMessageToUI(username, message) {
+            var allMessages = document.getElementById('allMessages');
+
+            var newMessage = document.createElement('tr');
+            newMessage.innerHTML = '<td>' + username + ':</td><td>' + message + '</td>';
+            allMessages.appendChild(newMessage);
+        }
+
+        const socket = io();
+        socket.on('message', (message) => {
+            console.log("received new message from server: " + message);
+
+            var received = JSON.parse(message);
+            addNewMessageToUI(received.username, received.message);
+
+        });
+    </script>
+</body>
+
+</html>

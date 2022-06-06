@@ -1,0 +1,34 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "username": "hao",
+            "password": "123",
+            "introduction": "I am Hao"
+        },
+        {
+            "id": 2,
+            "username": "thoi",
+            "password": "123",
+            "introduction": "I am Thoi"
+        },
+        {
+            "id": 3,
+            "username": "dinh",
+            "password": "123",
+            "introduction": "I am Dinh"
+        },
+        {
+            "id": 4,
+            "username": "john",
+            "password": "123",
+            "introduction": "I am John"
+        },
+        {
+            "id": 5,
+            "username": "bucky",
+            "password": "123",
+            "introduction": "I am Bucky"
+        }
+    ]
+}
